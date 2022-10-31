@@ -1,0 +1,18 @@
+.blog__item {
+
+    padding: 10px;
+    flex: 0 0 29%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: white;
+}
+
+.blog__item h2 {
+    text-align: center;
+}
+
+.cat_id {
+    background-color: #1976D2;
+    color: #fff;
+    width: fit-content;
+    padding: 5px 10px;
+}
