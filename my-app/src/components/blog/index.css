@@ -1,7 +1,0 @@
-.blog_posts {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 21px;
-    padding: 20px;
-}

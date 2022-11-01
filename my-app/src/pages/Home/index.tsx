@@ -1,17 +1,16 @@
 import "./index.css"
 import { Container } from '@mui/material';
 import Box from '@mui/material/Box';
-import Navbar from '../../components/Navbar';
-import Blog from '../../components/blog/Blog';
+import Blog from "../../components/BlogList/Blog"
 
 
 const index = () => {
+  
   return (
     <>
-      <Container maxWidth="xl">
-        <Navbar/>
+      <Container maxWidth="xl"> 
         <Box sx={{ bgcolor: '#cfe8fc', height: '100%' }} >
-          <Blog/>
+        <Blog/>
         </Box>
      
       </Container>
