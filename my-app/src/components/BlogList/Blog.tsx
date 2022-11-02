@@ -1,4 +1,4 @@
-import {useState, useEffect, SetStateAction} from 'react'
+import {useState, useEffect} from 'react'
 import axios from "axios"
 import "./index.css"
 import Post from "../blog-item/Post"
@@ -7,22 +7,44 @@ import ReactPaginate from 'react-paginate';
 const API = "http://18.192.182.140/api/articles";
 
 const Blog = () => {
-  const [hits,setHits] = useState(0)
-  const [currentPage, setcurrentPage] = useState(0)
-  const [pageCount, setPageCount] = useState(6)
+
   const [blogs, setBlogs] = useState<any[]>([])
+  const [pageCount, setPageCount] = useState(6);
+  const [items,setItems] = useState<any[]>([])
 
 
     useEffect(() => {
+      
       axios.get(API).then((response) => {
         console.log(response.data)
-        console.log(response.data)
         setBlogs(response.data.data);
-        setHits(response.data.per_page)
-        
+        setPageCount(response.data.last_page)
       });
+
     }, []);
 
+    const fetchPages = async (pageId: any)=>{
+      const res = await fetch(
+        `http://18.192.182.140/api/articles?page=${pageId}`
+      );
+      const response = await res.json();
+      console.log(response)
+      return response
+    
+      
+    }
+
+
+
+
+    const handlePageClick = async (data: any) =>{
+    let currentPage = data.selected + 1
+
+    const pages = await fetchPages(currentPage)
+      console.log(pages)
+    setItems(pages)
+    setBlogs(pages.data)
+    }
  
 
 
@@ -41,6 +63,7 @@ const Blog = () => {
         nextLabel="next >"
         pageRangeDisplayed={5}
         pageCount={pageCount}
+        onPageChange={handlePageClick}
         previousLabel="< previous"
         containerClassName={'container'}
 				previousLinkClassName={'page'}
