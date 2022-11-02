@@ -1,12 +1,13 @@
-
 import "./index.css"
-import ReactPaginate from 'react-paginate'; 
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from "react";
+import { Link } from "react-router-dom";
+
+
 
 
 type blogProps = {
       title:string;
       body:string;
+      id: number;
 }
 
 
@@ -14,9 +15,12 @@ type blogProps = {
 const Post = (blog: blogProps) => {
       return ( 
         <>
-        <div className='blog__item'>
+        <div className='blog__item' key={blog.id}>
         <h2>{blog.title}</h2>
-        <h2>{blog.body}</h2>
+        <p>{blog.body}</p>
+        
+        <Link to={`/${blog.id}`} className="btn"> Read More</Link>
+        
         </div>
        
 

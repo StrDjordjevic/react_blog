@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Blog from "../../components/BlogList/Blog"
 
 
+
 const index = () => {
   
   return (
