@@ -16,7 +16,6 @@ const Blog = () => {
     useEffect(() => {
       
       axios.get(API).then((response) => {
-        console.log(response.data)
         setBlogs(response.data.data);
         setPageCount(response.data.last_page)
       });
@@ -28,14 +27,10 @@ const Blog = () => {
         `http://18.192.182.140/api/articles?page=${pageId}`
       );
       const response = await res.json();
-      console.log(response)
       return response
     
       
     }
-
-
-
 
     const handlePageClick = async (data: any) =>{
     let currentPage = data.selected + 1
@@ -45,8 +40,6 @@ const Blog = () => {
     setItems(pages)
     setBlogs(pages.data)
     }
- 
-
 
   return (
     <>
