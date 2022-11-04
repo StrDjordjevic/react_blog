@@ -1,6 +1,7 @@
 .blog__item {
     padding: 20px;
-    flex: 0 0 29%;
+    width: 363px;
+    height: 440px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     background-color: white;
     text-align: center;
@@ -9,8 +10,17 @@
     justify-content: space-between;
 }
 
+
+
 .blog__item h2 {
     text-align: center;
+}
+
+.blog__item p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .btn {

@@ -1,0 +1,26 @@
+.blog__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.blog__container button {
+    padding: 20px 0;
+    width: 300px;
+    margin: 20px auto;
+}
+
+.blog__content__wrap {
+    padding: 20px;
+    text-align: center;
+}
+
+.blog__content__wrap h2 {
+    text-align: center;
+}
+
+.category_id {
+    padding: 10px;
+    background-color: #1976D2;
+    color: #fff;
+    width: fit-content;
+}

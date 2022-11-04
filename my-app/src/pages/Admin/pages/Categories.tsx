@@ -4,24 +4,27 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import "./index.css";
 import ReactPaginate from "react-paginate";
-import { getBlogs } from "../../components/api";
 import { Link } from "react-router-dom";
-import { API, token } from "../../components/BlogList/Blog";
+import { token } from "../../../components/BlogList/Blog";
+import { getCategories } from "../../../components/CategoriesApi";
 
-const AdminPage = () => {
-  const [blogs, setBlogs] = useState<any[]>([]);
-  const [pageCount, setPageCount] = useState(9);
+const catApi = "http://18.192.182.140/api/categories";
+
+const Categories = () => {
+  const [categories, setCategories] = useState<any[]>([]);
+  const [pageCount, setPageCount] = useState(6);
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchBlogs();
+    fetchCategories();
     fetchPages(null);
   }, []);
 
-  const fetchBlogs = async () => {
+  const fetchCategories = async () => {
     try {
-      await getBlogs().then(({ data }: any) => {
-        setBlogs(data.data);
+      await getCategories().then(({ data }: any) => {
+        setCategories(data.data);
+        console.log(data.data);
       });
     } catch (err) {
       console.log("Error");
@@ -29,9 +32,7 @@ const AdminPage = () => {
   };
 
   const fetchPages = async (pageId: any) => {
-    const res = await fetch(
-      `http://18.192.182.140/api/articles?page=${pageId}`
-    );
+    const res = await fetch(`${catApi}?page=${pageId}`);
     const response = await res.json();
     setPageCount(response.last_page);
     return response;
@@ -40,7 +41,7 @@ const AdminPage = () => {
   //Delete blog
 
   const handleDelete = async (id: any) => {
-    const response = await axios.delete(`${API}/${id}?api_token=${token}`);
+    const response = await axios.delete(`${catApi}/${id}?api_token=${token}`);
     if (response.statusText === "OK") {
       window.location.reload();
     } else {
@@ -52,7 +53,7 @@ const AdminPage = () => {
     let currentPage = data.selected + 1;
     const pages = await fetchPages(currentPage);
     setItems(pages);
-    setBlogs(pages.data);
+    setCategories(pages.data);
   };
   return (
     <>
@@ -60,25 +61,23 @@ const AdminPage = () => {
         <Box sx={{ bgcolor: "#cfe8fc", height: "100%" }}>
           <div className="admin__content">
             <div className="create__btn">
-              <Link to="/create" className="edit__btn">
+              <Link to="/createCategories" className="edit__btn">
                 CREATE NEW +
               </Link>
             </div>
             <div className="admin__posts">
               <div className="categories__btn">
-                <Link to="/categories" className="edit__btn">
-                  CATEGORIES
+                <Link to="/admin" className="edit__btn">
+                  ADMIN
                 </Link>
               </div>
-              {blogs.map((blog) => (
-                <div key={blog.id} className="admin__post">
+
+              {categories.map((category) => (
+                <div key={category.id} className="admin__post">
                   <div className="admin__info">
-                    <p className="id_numb">id: {blog.id}</p>
-                    <h2>{blog.title}</h2>
-                    <span className="id_cat">
-                      category id: {blog.category_id}
-                    </span>
+                    <span className="id_cat">category id: {category.id}</span>
                   </div>
+                  <span>name: {category.name}</span>
                   <div className="btns">
                     <Link to={`/edit`} className="edit__btn">
                       EDIT
@@ -86,7 +85,7 @@ const AdminPage = () => {
                     <button
                       className="delete__btn"
                       onClick={() => {
-                        handleDelete(blog.id);
+                        handleDelete(category.id);
                       }}
                     >
                       DELETE
@@ -119,4 +118,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default Categories;

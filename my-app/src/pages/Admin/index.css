@@ -92,3 +92,11 @@
 .delete__btn:hover {
     background-color: rgb(243, 26, 26);
 }
+
+.categories__btn {
+    width: 200px;
+}
+
+.categories__btn a {
+    background-color: #1976D2;
+}

@@ -18,6 +18,7 @@ const style = {
 
 const btnStyle = {
   color: "#fff",
+  background: "green",
 };
 
 export default function BasicModal() {

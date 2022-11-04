@@ -3,8 +3,12 @@ import axios from "axios";
 import "./index.css";
 import Post from "../blog-item/Post";
 import ReactPaginate from "react-paginate";
+import { getBlogs } from "../api";
 
 export const API = "http://18.192.182.140/api/articles";
+
+export const token =
+  "9aK4W3D7NpbWwPzJmUOIcyPmyehl0PHZLWP14rzQqKzUPtcFCo0Tn051CvwN";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -12,17 +16,26 @@ const Blog = () => {
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get(API).then((response) => {
-      setBlogs(response.data.data);
-      setPageCount(response.data.last_page);
-    });
+    fetchBlogs();
+    fetchPages(null);
   }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      await getBlogs().then(({ data }: any) => {
+        setBlogs(data.data);
+      });
+    } catch (err) {
+      console.log("Error");
+    }
+  };
 
   const fetchPages = async (pageId: any) => {
     const res = await fetch(
       `http://18.192.182.140/api/articles?page=${pageId}`
     );
     const response = await res.json();
+    setPageCount(response.last_page);
     return response;
   };
 
@@ -30,7 +43,6 @@ const Blog = () => {
     let currentPage = data.selected + 1;
 
     const pages = await fetchPages(currentPage);
-    console.log(pages);
     setItems(pages);
     setBlogs(pages.data);
   };
